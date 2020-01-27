@@ -9,3 +9,5 @@ Add copywrite
 
 Thanx to all
 Adding changes before rebasing conflicts
+
+These changes are from bigtrouble
