@@ -1,5 +1,6 @@
-Test Git Quick Start demo
 
+Test Git Quick Start demo
+Adding conflicting changes
 
 Example website
 
