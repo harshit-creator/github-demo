@@ -1,0 +1,260 @@
+Why source control?
+Source control is a backup/Archive
+versioning/history
+undo changes
+comparing
+collaboration
+blame
+isolation of changes
+experimentation
+Context switching
+Code review
+
+Who needs source control?
+developers/programmers
+models
+text files
+
+Source control options
+2 types
+centralized 
+Free; subversion,CVS
+commercial: clear case,Preforcw,TFS
+Requires connection to central server for most operations
+
+decentralized/distributed
+Mecurial(Hg)
+Git
+Most operations are local
+Central server not required
+
+
+What is Git??
+Distributed source control s/m
+	Not required to be decentralized/distributed
+	Massively scales
+	open source
+	developed for linux project req.
+	most oprns are local
+	very fast
+	active community
+	most popular DVCS,VCS
+	
+Git repository
+Repository contains files,history,config managed by Git
+
+Three states of Git
+Working Directory
+Staging Area - pre-commit holding area
+commit - Git Repository(history) Repository(.git folder)
+local repository
+Remote repository
+Master Branch
+
+
+
+
+
+Git Commands:-
+# git clone <url>   //This will clone the remote repository on your local repository with the name that you have given on your remote repository.
+# cd <github-demo>// move to your local repository
+# ls // this will list all the files present in that directory.
+
+#git status // this will tell your branch , any updated files that are to be committed.
+
+
+Let us create a new file start.txt in our local repository
+# echo "Test Git Commands demo">> start.txt //Now a file with name start.txt is created
+# git status  // Now it will show an untracked file at local repository of which git is unaware of(unstaged area).
+# git add start.txt// Now the file will be added in staging area. These files are not committed yet They can be restored from staged area to unstaged area. Benefit of staged area is that it will give u flexibility to commit multiple files of same group at once.
+# git commit -m "Adding start text file" //This will add the file with the message in quotes to .git repository(local) but still it is local and is not available at github.
+
+//To reflect it on github you have to push it on github 
+# git push origin master  // where master(branch name) you have to specify on which branch you want to push the file.
+
+cat ~/.gitconfig (this will give user details and editor details)
+
+
+git init <folder-name>  // initialize new empty folder as well as existing folder as git repository
+cd <folder-name>// dig into new folder
+ls // this will list nothing
+ls -al // this will list a file with .git folder where everything of git resides in
+cd .git // after moving into .git/ we will see the directories of which git repository consists of
+
+//Root-commit represent the very first commit of that repsitory
+rm -rf fresh-project will delete that git directory in local repository
+
+// To add all the untracked files to the staging area use 
+$ git add . // recursive add
+//Difference between fork and clone
+fork is to take someone git repository data to your repository while clone is to take data from your remote repository to your local git repository.
+
+$ git pull origin master // This will update our local repository with any of the changes in the remote repository just to make sure that we are up to date. It is good practice to pull jus before push.
+if you are working with many developers on the same thing then it is good practice to do git pull before push.
+
+$ git lsfiles// this will list all the files that are being tracked by git.
+
+What is tracked file?
+Any file which is already committed or added in staged area or local git repository or remote repository or a modified file that is already committed.
+
+Untracked file is a file which is newly created.
+
+A modified file can be added to staging area as well as can be comitted in a single command.
+$ git commit -am "modified by me"
+
+// After adding a file to staged area it can be reverted back to unstaged area by using the following command
+$ git reset HEAD <file-name> // file will get back to unstaged area
+// To get a previous version of committed file.
+$ git checkout -- <file name>// To discard changes in the working directory.
+
+
+// Renaming and moving file in git from one directory to another can be done by
+$ git mv <previous file name> <new file name>  // Here file will be in staged area.
+//If you do this by using bash mv command then git will consider it as deleting a file and then creating a new file.
+so file will be kept into untracked area.
+$git add -A to make git aware
+
+// Deleting files in git
+Deleting an untracked file
+$ rm <filename.txt>
+
+Deleting a staged or tracked file
+$ git rm <file name>
+after deleting commit the status so that git repository get aware of
+$ git commit -m "Deleted the file"
+
+//To see the commit history
+$ git log
+$ history of specific file
+use $ git log -- hipster.txt
+
+//git alias creating shorter comands for longer commands
+git config --global alias.<command name u want to specify> "longer command"
+
+ex: git log --all --graph --decorate --oneline (THis is the command that will give the commit history in one line)
+git config --global alias.hist "log --all --graph --decorate --oneline"
+
+now u  can use git hist anytime in place of above long command
+$ git hist
+
+All aliases are stored under the alias in .gitconfig file. You can open it in any editor and can change the command any time
+// Ignoring unwanted files
+in .gitignore file write the file name to be ignored and stage and commit .gitignore file
+
+
+//It is not a good practice to do all the changes on master branch itself atlest we should create feature branches to isolate the changes and integrate back ito master once the feature is stabilize.
+
+$ git branch -a // this lists all the local and remote branches
+and active branch by asterisk sign
+
+// A new branch can be created by:
+$ git branch mynewbranch
+
+//Switching to new branch
+$ git checkout mynewbranch
+
+//Renaming branch name
+$ git branch -m mynewbranch newbranch
+
+//deleting a branch 
+$ git branch -d <branchname>
+
+// Creating a branch and switching to that branch in a single step
+$ git checkout -b title-change
+
+//editing some file on a branch and then committing it.
+// Now switch to the master branch.
+$ git checkout master
+
+//Before moving the file on to master we can compare updated file with the previous file
+$ git diff master title-change  compare 2 files in different branches.
+
+Now merging the feature branch (updated file) on master branch
+
+$ git merge <branch name>
+
+Fast forward merge: When there are no commits in master, then fast forward merge is possible. It seems like that we never created a branch. 
+
+Disabling fast forward merge 
+
+$ git merge <bramch name> --no-ff
+
+a graph will show the updated in branch separately unlike the fast forward merge. Now if you delete that branch even then git will track your branching stuff.
+
+//Rebasing
+Let's assume that we are working on feature branch and someone is working on master branch on any other file and we want to incorporate the changes on feature branch then rebasing is done.
+So, that there we don't have overhead when we are going to merge feature branch with master.
+
+To rebase 
+$ git rebase master
+
+To abort rebase 
+$ git rebase --abort
+
+
+
+//Let us assume that we are working on local git repository and someone is updating on remote repository and we want to put ours on remote after someone's else then git pull --rebase is used
+
+git fetch vs git pull 
+git fetch is a non destructive command. It just take references from remote and download it into our local repository. But pull merge the changes to local repository.
+
+$ git pull --rebase origin master
+
+
+
+// Stashing
+If you have modified some file and it's not complete to be committed and you have to update other file before this and commit then u can stash that modified file and can use later.
+$ git stash save "message"
+
+after completing other file commit 
+use
+$ git stash apply // it is similar to git status  but show stash file as well.
+$ git stash list 
+$ git stash -u will stash untracked files as well as modified file
+
+$ git stash drop 
+
+$ git stash pop // it does the work of apply and pop
+
+
+$ git stash branch <branch-name>// New branch is created and switching to new branch occurs and stashing also occurs.
+
+
+
+
+
+//Tagging
+To mark the significant accomplishments in the repository git provides tagging support
+Tags are just labels.
+
+$ git tag <mytag>
+
+git show mytag
+
+git tag -- delete mytag
+
+//Annotated tags
+Gives some more info with lightweight tags.
+$ git tag -a mytag
+a text file will open where u can add annotatios
+
+// COmparing tags
+git tag applies tag to current commit
+
+//Comparison b/w tags
+git diff v-1.0 v-1.1  
+
+applying tag to some previous commit
+Copy the commit id from history add tag to it by 
+$ git tag -a v-0.9-beta <commit id>
+
+//Updating an existing tag
+git tag -a v-0.9-beta -f <commit id> // so now tag will move to new commit id
+
+pushing tag
+git push origin <tag name>
+
+git push origin master --tags// push all the tags on master
+
+deleting a tagb from remote
+git push origin :<tagname>
